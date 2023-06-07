@@ -1,0 +1,215 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf0 import java.util.Scanner;\
+\
+public class CinemaTickets \{\
+\
+    public static String[][] movies = \{\
+        \{"Avatar          ", "4PM ", "12/4/2021 ", "1"\},\
+        \{"The God Father  ", "1PM ", "19/4/2021 ", "5"\},\
+        \{"Interstellar    ", "9PM ", "1/5/2021  ", "3"\},\
+        \{"Little Women    ", "11AM", "25/4/2021 ", "4"\},\
+        \{"Fast And Furious", "7AM ", "3/5/2021  ", "2"\}\
+    \};\
+    \
+    static String[][] seat_position = \{\{"A1","A2","A3","A4","A5"\},\
+            \{"B1","B2","B3","B4","B5"\},\
+                \{"C1","C2","C3","C4","C5"\},\
+                    \{"D1","D2","D3","D4","D5"\}\};\
+\
+    public static void main(String[] args) \{\
+        System.out.println("Please choose your role:");\
+        System.out.println("1- Admin");\
+        System.out.println("2- User");\
+\
+        Scanner input = new Scanner(System.in);\
+        Scanner in = new Scanner(System.in);\
+\
+        int choice = input.nextInt();\
+        if (choice == 1) \{\
+\
+            displayMovies();\
+\
+            System.out.println("choose what you want to do: ");\
+            System.out.println("1- Update");\
+            System.out.println("2- Delete");\
+\
+            choice = input.nextInt();\
+            if (choice == 1) \{\
+                System.out.print("choose a movie number to update it: ");\
+                int movieNum = input.nextInt();\
+                System.out.println("choose the column you want to update: ");\
+                System.out.println("1- title ");\
+                System.out.println("2- time");\
+                System.out.println("3- date");\
+                System.out.println("4- theater number");\
+\
+                int col = input.nextInt();\
+\
+                System.out.print("Enter the new value: ");\
+                String val = in.nextLine();\
+                movies[movieNum - 1][col - 1] = val;\
+                System.out.println("Done !");\
+                displayMovies();\
+\
+            \} else if (choice == 2) \{\
+                System.out.print("choose a movie number to Delete it: ");\
+                int movieNum = input.nextInt();\
+\
+                String[][] tmpMov = new String[movies.length - 1][movies.length];\
+\
+                int k = 0;\
+                for (int i = 0; i < movies.length; i++) \{\
+                    if (i == movieNum - 1) \{\
+                        continue;\
+                    \}\
+                    for (int j = 0; j < movies[i].length; j++) \{\
+                        tmpMov[k][j] = movies[i][j];\
+                    \}\
+                    k++;\
+                \}\
+                movies = tmpMov;\
+                displayMovies();\
+\
+            \} else \{\
+\
+            \}\
+\
+        \} else if (choice == 2) \{\
+        	boolean ok = true;\
+            while (ok) \{\
+\
+                System.out.println("Enter your name: ");\
+                String name = in.nextLine();\
+                System.out.println("Enter your phone number: ");\
+                String phoneNumber = in.nextLine();\
+\
+                System.out.println("**** Welcome " + name + " ****");\
+                displayMovies();\
+\
+                System.out.println("enter the number of the movie you want: ");\
+                int reserve = input.nextInt();\
+                String [] chosen_movie = new String[4];\
+               \
+                		chosen_movie[0] = movies[reserve-1][0];\
+                		chosen_movie[1] = movies[reserve-1][1];\
+                		chosen_movie[2] = movies[reserve-1][2];\
+                		chosen_movie[3] = movies[reserve-1][3];\
+                		\
+                System.out.println("enter the number of seats you want to reserve: ");\
+                int seatsNum = input.nextInt();\
+\
+                String [] chosen_positions = new String[seatsNum];\
+                int n_temp =0;\
+                String position = null; \
+                for (int k = 0; k < seatsNum; k++) \{\
+                	System.out.println("         -------------------");\
+                    System.out.println("         -                 -");\
+                    System.out.println("         -      Screen     -");\
+                    System.out.println("         -                 -");\
+                    System.out.println("         -------------------");\
+                    for(int i = 0; i < 4; i++)\
+                    \{\
+                        for(int j = 0; j < 4; j++)\
+                        \{\
+                            System.out.print("    "+seat_position[i][j]+"   ");\
+                        \}\
+                        System.out.println();\
+                    \}\
+                    System.out.println("Enter the position: \\n*NOTE: X indecades that the seat is 'unavalibale'");\
+                    position = input.next();\
+                        chosen_positions[n_temp] = position;\
+                        n_temp++;\
+                    for(int i = 0; i < 4; i++)\
+                        \{\
+                            for(int j = 0; j < 4; j++)\{\
+                                \
+                            if(position.equals(seat_position[i][j]))\
+                            \{\
+                                seat_position[i][j] = " X";\
+                            \}\
+                            \
+                            \}\
+                        \}\
+                \}\
+                System.out.println();\
+                System.out.println("****************************");\
+                System.out.println("So, this is your Ticket: ");\
+                System.out.println("****************************");\
+                System.out.println("Name:  " + name);\
+                System.out.println("Phone: " + phoneNumber);\
+                System.out.println("---Movie Information---");\
+                System.out.println("Title: "+chosen_movie[0]);\
+                System.out.println("Time: "+chosen_movie[1]);\
+                System.out.println("Date: "+chosen_movie[2]);\
+                System.out.println("Theater Number: "+chosen_movie[3]);\
+                System.out.println("---------------------");\
+                System.out.println("Number of Seats: " + seatsNum);\
+                System.out.print("The seats are: ");\
+                for(int g = 0 ; g<seatsNum; g++)\{\
+                    System.out.print(chosen_positions[g]+", ");\
+                \}\
+                System.out.println("\\n****************************");\
+                System.out.println();\
+                System.out.println("Now, choose what you want to do: ");\
+                System.out.println("1- cancel booking ");\
+                System.out.println("2- cancel and book again");\
+                System.out.println("3- Confirm");\
+\
+                choice = input.nextInt();\
+                if (choice == 1) \{\
+                    System.out.println("Ok, booking process is terminated !");\
+                    ok = false;\
+                \} else if (choice == 2) \{\
+                    System.out.println("Ok, lets start over again !");\
+                    System.out.println("- - - - - - - - - - - - - - -");\
+                    seat_position[0][0] = "A1";\
+                    seat_position[0][1] = "A2";\
+                    seat_position[0][2] = "A3";\
+                    seat_position[0][3] = "A4";\
+                    seat_position[0][4] = "A5";\
+                    seat_position[1][0] = "B1";\
+                    seat_position[1][1] = "B2";\
+                    seat_position[1][2] = "B3";\
+                    seat_position[1][3] = "B4";\
+                    seat_position[1][4] = "B5";\
+                	seat_position[2][0] = "C1";\
+                	seat_position[2][1] = "C2";\
+                	seat_position[2][2] = "C3";\
+                	seat_position[2][3] = "C4";\
+                	seat_position[2][4] = "C5";\
+                	seat_position[3][0] = "D1";\
+                	seat_position[3][1] = "D2";\
+                	seat_position[3][2] = "D3";\
+                	seat_position[3][3] = "D4";\
+                	seat_position[3][4] = "D5";\
+                \} else \{\
+                    System.out.println("Ok, Thanks for booking with us !!");\
+                    ok = false;\
+                \}\
+            \}\
+        \} else \{\
+            System.out.println("invalid role !!");\
+        \}\
+     \
+    \}\
+\
+    public static void displayMovies() \{\
+        System.out.println("**** this the movies menu: ****");\
+        for (int i = 0; i < movies.length; i++) \{\
+            System.out.print((i + 1) + "- ");\
+            for (int j = 0; j < movies[i].length; j++) \{\
+                System.out.print(movies[i][j] + '\\t');\
+            \}\
+            System.out.println();\
+        \}\
+    \}\
+\
+\}\
+}

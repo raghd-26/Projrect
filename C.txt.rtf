@@ -1,0 +1,213 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2709
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\deftab560
+\pard\pardeftab560\slleading20\pardirnatural\partightenfactor0
+
+\f0\fs26 \cf0 #include <stdio.h>\
+#include <stdbool.h>\
+#include <string.h>\
+\
+char movies[5][4][154] = \{\
+    \{"Avatar          ", "4PM ", "12/4/2021 ", "1"\},\
+    \{"The God Father  ", "1PM ", "19/4/2021 ", "5"\},\
+    \{"Interstellar    ", "9PM ", "1/5/2021  ", "3"\},\
+    \{"Little Women    ", "11AM", "25/4/2021 ", "4"\},\
+    \{"Fast And Furious", "7AM ", "3/5/2021  ", "2"\}\
+\};\
+\
+char seat_position[4][5][3] = \{\
+    \{"A1","A2","A3","A4","A5"\},\
+    \{"B1","B2","B3","B4","B5"\},\
+    \{"C1","C2","C3","C4","C5"\},\
+    \{"D1","D2","D3","D4","D5"\}\
+\};\
+\
+void displayMovies() \{\
+    printf("**** this is the movies menu: ****\\n");\
+    for (int i = 0; i < 5; i++) \{\
+        printf("%d- ", i + 1);\
+        for (int j = 0; j < 4; j++) \{\
+            printf("%s\\t", movies[i][j]);\
+        \}\
+        printf("\\n");\
+    \}\
+\}\
+\
+int main() \{\
+    printf("Please choose your role:\\n");\
+    printf("1- Admin\\n");\
+    printf("2- User\\n");\
+\
+    int choice;\
+    scanf("%d", &choice);\
+    if (choice == 1) \{\
+        displayMovies();\
+\
+        printf("choose what you want to do: \\n");\
+        printf("1- Update\\n");\
+        printf("2- Delete\\n");\
+\
+        scanf("%d", &choice);\
+        if (choice == 1) \{\
+            printf("choose a movie number to update it: ");\
+            int movieNum;\
+            scanf("%d", &movieNum);\
+            printf("choose the column you want to update: \\n");\
+            printf("1- title\\n");\
+            printf("2- time\\n");\
+            printf("3- date\\n");\
+            printf("4- theater number\\n");\
+\
+            int col;\
+            scanf("%d", &col);\
+\
+            printf("Enter the new value: ");\
+            char val[154];\
+            scanf("%s", val);\
+            strcpy(movies[movieNum - 1][col - 1], val);\
+            printf("Done !\\n");\
+            displayMovies();\
+\
+        \} else if (choice == 2) \{\
+            printf("choose a movie number to Delete it: ");\
+            int movieNum;\
+            scanf("%d", &movieNum);\
+\
+            char *tmpMov[4][15];\
+            int k = 0;\
+            for (int i = 0; i < 5; i++) \{\
+                if (i == movieNum - 1) \{\
+                    continue;\
+                \}\
+                for (int j = 0; j < 4; j++) \{\
+                    strcpy(tmpMov[k][j], movies[i][j]);\
+                \}\
+                k++;\
+            \}\
+            for (int i = 0; i < 4; i++) \{\
+                for (int j = 0; j < 15; j++) \{\
+                    strcpy(movies[i][j], tmpMov[i][j]);\
+                \}\
+            \}\
+            displayMovies();\
+\
+        \} else \{\
+\
+        \}\
+\
+    \} else if (choice == 2) \{\
+        bool ok = true;\
+        while (ok) \{\
+            printf("Enter your name: ");\
+            char name[100];\
+            scanf("%s", name);\
+            printf("Enter your phone number: ");\
+            char phoneNumber[100];\
+            scanf("%s", phoneNumber);\
+\
+            printf("**** Welcome %s ****\\n", name);\
+            displayMovies();\
+\
+            printf("enter the number of the movie you want: ");\
+            int reserve;\
+            scanf("%d", &reserve);\
+            char chosen_movie[4][15];\
+            strcpy(chosen_movie[0], movies[reserve - 1][0]);\
+            strcpy(chosen_movie[1], movies[reserve - 1][1]);\
+            strcpy(chosen_movie[2], movies[reserve - 1][2]);\
+            strcpy(chosen_movie[3], movies[reserve - 1][3]);\
+\
+            printf("enter the number of seats you want to reserve: ");\
+            int seatsNum;\
+            scanf("%d", &seatsNum);\
+\
+            char chosen_positions[seatsNum][3];\
+            int n_temp = 0;\
+            char position[3];\
+            for (int k = 0; k < seatsNum; k++) \{\
+                printf("         -------------------\\n");\
+                printf("         -                 -\\n");\
+                printf("         -      Screen     -\\n");\
+                printf("         -                 -\\n");\
+                printf("         -------------------\\n");\
+                for (int i = 0; i < 4; i++) \{\
+                    for (int j = 0; j < 4; j++) \{\
+                        printf("    %s   ", seat_position[i][j]);\
+                    \}\
+                    printf("\\n");\
+                \}\
+                printf("Enter the position: \\n*NOTE: X indicates that the seat is 'unavailable'\\n");\
+                scanf("%s", position);\
+                strcpy(chosen_positions[n_temp], position);\
+                n_temp++;\
+                for (int i = 0; i < 4; i++) \{\
+                    for (int j = 0; j < 4; j++) \{\
+                        if (strcmp(position, seat_position[i][j]) == 0) \{\
+                            strcpy(seat_position[i][j], " X");\
+                        \}\
+                    \}\
+                \}\
+            \}\
+            printf("\\n****************************\\n");\
+            printf("So, this is your Ticket: \\n");\
+            printf("****************************\\n");\
+            printf("Name:  %s\\n", name);\
+            printf("Phone: %s\\n", phoneNumber);\
+            printf("---Movie Information---\\n");\
+            printf("Title: %s\\n", chosen_movie[0]);\
+            printf("Time: %s\\n", chosen_movie[1]);\
+            printf("Date: %s\\n", chosen_movie[2]);\
+            printf("Theater Number: %s\\n", chosen_movie[3]);\
+            printf("---------------------\\n");\
+            printf("Number of Seats: %d\\n", seatsNum);\
+            printf("The seats are: ");\
+            for (int g = 0; g < seatsNum; g++) \{\
+                printf("%s, ", chosen_positions[g]);\
+            \}\
+            printf("\\n****************************\\n\\n");\
+            printf("Now, choose what you want to do: \\n");\
+            printf("1- cancel booking \\n");\
+            printf("2- cancel and book again\\n");\
+            printf("3- Confirm\\n");\
+\
+            scanf("%d", &choice);\
+            if (choice == 1) \{\
+                printf("Ok, booking process is terminated !\\n");\
+                ok = false;\
+            \} else if (choice == 2) \{\
+                printf("Ok, lets start over again !\\n");\
+                printf("- - - - - - - - - - - - - - -\\n");\
+                strcpy(seat_position[0][0], "A1");\
+                strcpy(seat_position[0][1], "A2");\
+                strcpy(seat_position[0][2], "A3");\
+                strcpy(seat_position[0][3], "A4");\
+                strcpy(seat_position[0][4], "A5");\
+                strcpy(seat_position[1][0], "B1");\
+                strcpy(seat_position[1][1], "B2");\
+                strcpy(seat_position[1][2], "B3");\
+                strcpy(seat_position[1][3], "B4");\
+                strcpy(seat_position[1][4], "B5");\
+                strcpy(seat_position[2][0], "C1");\
+                strcpy(seat_position[2][1], "C2");\
+                strcpy(seat_position[2][2], "C3");\
+                strcpy(seat_position[2][3], "C4");\
+                strcpy(seat_position[2][4], "C5");\
+                strcpy(seat_position[3][0], "D1");\
+                strcpy(seat_position[3][1], "D2");\
+                strcpy(seat_position[3][2], "D3");\
+                strcpy(seat_position[3][3], "D4");\
+                strcpy(seat_position[3][4], "D5");\
+            \} else \{\
+                printf("Ok, Thanks for booking with us !!\\n");\
+                ok = false;\
+            \}\
+        \}\
+    \} else \{\
+        printf("invalid role !!\\n");\
+    \}\
+\}\
+\
+}
